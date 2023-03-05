@@ -9,6 +9,6 @@ from store.models import Product
 #Pull data from db
 
 def say_hello(request):
-    queryset = Product.objects.filter(Q(inventory__lt=10) & ~ Q(unit_price__lt=20))
+    queryset = Product.objects.values('id','title','collection__title')
     return render(request, 'hello.html', {'name': 'ajmal', 'products': list(queryset)})
 
