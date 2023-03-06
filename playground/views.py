@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Q
-from store.models import Product
+from django.db.models.aggregates import Min,Max,Count,Avg
+from store.models import Product, OrderItem
 
 # Create your views here.
 #Transform
@@ -9,6 +10,5 @@ from store.models import Product
 #Pull data from db
 
 def say_hello(request):
-    queryset = Product.objects.values('id','title','collection__title')
-    return render(request, 'hello.html', {'name': 'ajmal', 'products': list(queryset)})
-
+    result = Product.objects.aggregate(Count('id'),Min('unit_price'))
+    return render(request, 'hello.html', {'name': 'ajmal', 'result':result})
