@@ -9,6 +9,9 @@ class ProductSerializer(serializers.Serializer):
     price_with_tax = serializers.SerializerMethodField(
         method_name= 'calculate_tax'
     )
+    collection = serializers.PrimaryKeyRelatedField(
+        queryset = Collection.objects.all()
+    )
     
     
     def calculate_tax(self, product:Product):
