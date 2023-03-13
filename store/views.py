@@ -9,7 +9,7 @@ from .serializers import ProductSerializer
 
 @api_view()
 def product_list(request):
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related('collection').all()
     serializer = ProductSerializer(queryset, many=True)
     return Response(serializer.data)
 
