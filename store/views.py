@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import status
-from .models import Product, Collection
+from .models import Product, Collection, OrderItem
 from .serializers import ProductSerializer, CollectionSerializer
 
 # Create your views here.
@@ -18,14 +18,12 @@ class ProductViewSet(ModelViewSet):
     def get_serializer_context(self):
         return {'request':self.request}
     
-    def delete(self, request, id): 
-        product = get_object_or_404(Product, pk=id)       
-        if product.orderitems.count() > 0: # related_name='orderitems' in models.py under OrderItem class product object 
+    def destroy(self, request, *args, **kwargs):     
+        if OrderItem.objects.filter(product_id=kwargs['pk']).count() > 0: # related_name='orderitems' in models.py under OrderItem class product object 
             return Response(
                 {"error":"product cannot be deleted because it is associated with order item"},
                 status=status.HTTP_405_METHOD_NOT_ALLOWED
                 )
-        product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
