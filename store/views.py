@@ -32,13 +32,12 @@ class CollectionViewSet(ModelViewSet):
             products_count=Count('products')).all()
     serializer_class = CollectionSerializer
     
-    def delete(self, request, pk):
-        collection = get_object_or_404(Collection, pk=pk)
-        if collection.products.count() > 0: # related_name='orderitems' in models.py under OrderItem class product object 
+    def destroy(self, request, *args, **kwargs):
+        if Collection.objects.filter(id=kwargs['pk']).count() > 0: # related_name='orderitems' in models.py under OrderItem class product object 
             return Response(
                 {"error":"This collection cannot be deleted because it contains one or more items"},
                 status=status.HTTP_405_METHOD_NOT_ALLOWED
                 )
-        collection.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+        
     
