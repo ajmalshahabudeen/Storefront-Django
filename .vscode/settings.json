@@ -3,6 +3,7 @@
         "ajmal",
         "custome",
         "msipa",
-        "orderitems"
+        "orderitems",
+        "viewsets"
     ]
 }
