@@ -1,9 +1,9 @@
 from . import views
 from django.urls import path
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 from pprint import pprint
 
-router = SimpleRouter()
+router = DefaultRouter()
 router.register('products', views.ProductViewSet)
 router.register('collections', views.CollectionViewSet)
 pprint(router.urls)
