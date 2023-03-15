@@ -1,28 +1,25 @@
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.db.models.aggregates import Count
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import status
 from .models import Product, Collection, OrderItem, Review
+from .filters import ProductFilter
 from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer
 
 # Create your views here.
 class ProductViewSet(ModelViewSet):
-    serializer_class = ProductSerializer
-    
-    def get_queryset(self):
-        queryset = Product.objects.all()
-        collection_id = self.request.query_params.get('collection_id')
-        if collection_id is not None:
-            queryset = queryset.filter(collection_id=collection_id)
-        return queryset
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer 
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ProductFilter
     
     def get_serializer_context(self):
-        return {'request':self.request}
+        return {'request':self.request} 
     
     def destroy(self, request, *args, **kwargs):     
         if OrderItem.objects.filter(product_id=kwargs['pk']).count() > 0: # related_name='orderitems' in models.py under OrderItem class product object 
