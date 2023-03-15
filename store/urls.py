@@ -4,7 +4,7 @@ from rest_framework_nested import routers
 from pprint import pprint
 
 router = routers.DefaultRouter()
-router.register('products', views.ProductViewSet)
+router.register('products', views.ProductViewSet, basename='products')
 router.register('collections', views.CollectionViewSet)
 pprint(router.urls)
 
@@ -25,4 +25,3 @@ urlpatterns = router.urls + products_router.urls
 #     path ('collections/', views.CollectionList.as_view()),
 #     path ('collections/<int:pk>/', views.CollectionDetail.as_view(), name='collection-detail'),
 # ]
- 
