@@ -9,7 +9,15 @@ from tags.models import TaggedItem
 # Register your models here.
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    pass
+    add_fieldsets = (
+    (
+        None,
+        {
+            "classes": ("wide",),
+            "fields": ("username", "password1", "password2", "email", "first_name", "last_name"),
+        },
+    ),
+)
 
 class TagInline(GenericTabularInline):
     model = TaggedItem
