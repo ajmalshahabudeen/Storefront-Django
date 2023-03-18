@@ -39,12 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'rest_framework', 
-    'playground',
     'debug_toolbar',
+    'playground',
     'store',
-    'store_custome',
     'tags',
     'likes',
+    'core'
 ]
 
 MIDDLEWARE = [
@@ -144,3 +144,5 @@ REST_FRAMEWORK = {
     # 'PAGE_SIZE': 10
     
 }
+
+AUTH_USER_MODEL = 'core.User'
