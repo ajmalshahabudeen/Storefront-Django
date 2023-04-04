@@ -96,6 +96,16 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'storefront',
+#         'HOST': '192.168.1.3',
+#         'USER': 'ajmal',
+#         'PASSWORD': '123123'
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
