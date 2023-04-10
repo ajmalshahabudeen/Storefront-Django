@@ -10,6 +10,8 @@ mysqlclient = "*"
 djangorestframework = "*"
 drf-nested-routers = "*"
 django-filter = "*"
+djangorestframework-simplejwt = "*"
+djoser = "*"
 
 [dev-packages]
 autopep8 = "*"
