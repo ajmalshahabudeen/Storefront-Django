@@ -8,5 +8,6 @@
         "orderitems",
         "simplejwt",
         "viewsets"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }
