@@ -9,5 +9,5 @@
         "simplejwt",
         "viewsets"
     ],
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "off"
 }

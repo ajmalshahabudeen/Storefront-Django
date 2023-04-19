@@ -6,3 +6,5 @@ markdown
 mysqlclient
 django-rest-framework-nested
 drf-nested-routers
+djoser
+djangorestframework_simplejwt
