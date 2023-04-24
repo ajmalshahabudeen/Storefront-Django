@@ -12,7 +12,7 @@ from .models import Customer, Product, Collection, OrderItem, Review, Cart, Cart
 from .filters import ProductFilter
 from .serializers import CustomerSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
 from .pagination import DefaultPagination
-from .permissions import IsAdminOrReadOnly
+from .permissions import IsAdminOrReadOnly, FullDjangoModelPermissions
 
 # Create your views here.
 class ProductViewSet(ModelViewSet):
@@ -91,7 +91,7 @@ class CartItemViewSet(ModelViewSet):
 class CustomerViewSet(ModelViewSet):
     queryset = Customer.objects.all()  
     serializer_class = CustomerSerializer  
-    permission_classes = [IsAdminUser]
+    permission_classes = [FullDjangoModelPermissions]
     
     # comment -- if everyone want to get user info and to edit need authentication
     # def get_permissions(self):
