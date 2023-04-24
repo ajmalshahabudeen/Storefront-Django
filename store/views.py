@@ -12,7 +12,7 @@ from .models import Customer, Product, Collection, OrderItem, Review, Cart, Cart
 from .filters import ProductFilter
 from .serializers import CustomerSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
 from .pagination import DefaultPagination
-from .permissions import IsAdminOrReadOnly, FullDjangoModelPermissions
+from .permissions import IsAdminOrReadOnly, FullDjangoModelPermissions, ViewCustomerHistoryPermission
 
 # Create your views here.
 class ProductViewSet(ModelViewSet):
@@ -111,3 +111,7 @@ class CustomerViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
+    
+    @action(detail=True, permission_classes=[ViewCustomerHistoryPermission])
+    def history(self, request, pk):
+        return Response('ok')
