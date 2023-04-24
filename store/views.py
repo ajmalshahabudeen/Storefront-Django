@@ -4,7 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import status
@@ -12,6 +12,7 @@ from .models import Customer, Product, Collection, OrderItem, Review, Cart, Cart
 from .filters import ProductFilter
 from .serializers import CustomerSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
 from .pagination import DefaultPagination
+from .permissions import IsAdminOrReadOnly
 
 # Create your views here.
 class ProductViewSet(ModelViewSet):
@@ -20,6 +21,7 @@ class ProductViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = ProductFilter
     pagination_class = DefaultPagination
+    permission_classes = [IsAdminOrReadOnly]
     search_fields = ['title', 'description'] 
     ordering_fields = ['unit_price', 'last_update']
     
@@ -38,7 +40,9 @@ class ProductViewSet(ModelViewSet):
 class CollectionViewSet(ModelViewSet):
     queryset = Collection.objects.annotate(
             products_count=Count('products')).all()
+    permission_classes = [IsAdminOrReadOnly]
     serializer_class = CollectionSerializer
+    
     
     def destroy(self, request, *args, **kwargs):
         if Collection.objects.filter(id=kwargs['pk']).count() > 0: # related_name='orderitems' in models.py under OrderItem class product object 
@@ -84,18 +88,18 @@ class CartItemViewSet(ModelViewSet):
             .select_related('product')
     
             
-class CustomerViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
+class CustomerViewSet(ModelViewSet):
     queryset = Customer.objects.all()  
-    serializer_class = CustomerSerializer 
-    permission_classes = [IsAuthenticated]
+    serializer_class = CustomerSerializer  
+    permission_classes = [IsAdminUser]
     
-    # if everyone want to get user info and to edit need authentication
-    def get_permissions(self):
-        if self.request.method == 'GET':
-            return [AllowAny()]
-        return [IsAuthenticated()]
+    # comment -- if everyone want to get user info and to edit need authentication
+    # def get_permissions(self):
+    #     if self.request.method == 'GET':
+    #         return [AllowAny()]
+    #     return [IsAuthenticated()]
     
-    @action(detail=False, methods = ['GET', 'PUT'])
+    @action(detail=False, methods = ['GET', 'PUT'], permission_classes = [IsAuthenticated])
     def me(self, request):
         (customer, created) = Customer.objects.get_or_create(user_id=request.user.id)
         # unpacked the tuple customer, get_or_create return tuple
