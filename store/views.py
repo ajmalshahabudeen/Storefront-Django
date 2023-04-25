@@ -10,7 +10,7 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import status
 from .models import Customer, Product, Collection, OrderItem, Review, Cart, CartItem, Order
 from .filters import ProductFilter
-from .serializers import CustomerSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, OrderSerializers
+from .serializers import CustomerSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, OrderSerializers, CreateOrderSerializer
 from .pagination import DefaultPagination
 from .permissions import IsAdminOrReadOnly, FullDjangoModelPermissions, ViewCustomerHistoryPermission
 
@@ -118,7 +118,7 @@ class CustomerViewSet(ModelViewSet):
     
 class OrderViewSet(ModelViewSet):
     # queryset = Order.objects.all()
-    serializer_class = OrderSerializers
+    # serializer_class = OrderSerializers
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
@@ -127,3 +127,11 @@ class OrderViewSet(ModelViewSet):
             return Order.objects.all()
         customer_id = Customer.objects.only('id').get(user_id=user.id)
         return Order.objects.filter(customer_id=customer_id)
+    
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return CreateOrderSerializer
+        return OrderSerializers
+    
+    def get_serializer_context(self):
+        return {'user_id': self.request.user.id}
