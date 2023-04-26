@@ -151,3 +151,4 @@ class CreateOrderSerializer(serializers.Serializer):
             OrderItem.objects.bulk_create(order_items)
             #deleting cart
             CartItem.objects.filter(pk=cart_id).delete()
+            return order
