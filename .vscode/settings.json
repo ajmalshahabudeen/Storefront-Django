@@ -22,6 +22,10 @@
         "pycparser",
         "pytz",
         "simplejwt",
+        "sqlparse",
+        "tzdata",
+        "uritemplate",
+        "urllib",
         "viewsets"
     ],
     "python.analysis.typeCheckingMode": "off"
