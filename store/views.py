@@ -8,9 +8,9 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import status
-from .models import Customer, Product, Collection, OrderItem, Review, Cart, CartItem, Order
+from .models import Customer, Product, Collection, OrderItem, Review, Cart, CartItem, Order, ProductImage
 from .filters import ProductFilter
-from .serializers import CustomerSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, OrderSerializers, CreateOrderSerializer, UpdateOrderSerializer
+from .serializers import CustomerSerializer, ProductSerializer, CollectionSerializer, ReviewSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, OrderSerializers, CreateOrderSerializer, UpdateOrderSerializer, ProductImageSerializer
 from .pagination import DefaultPagination
 from .permissions import IsAdminOrReadOnly, FullDjangoModelPermissions, ViewCustomerHistoryPermission
 
@@ -36,6 +36,16 @@ class ProductViewSet(ModelViewSet):
                 )
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class ProductImageViewSet(ModelViewSet):
+    serializer_class = ProductImageSerializer
+    
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['products_pk']}
+    
+    def get_queryset(self):
+        return ProductImage.objects.filter(
+            product_id=self.kwargs['products_pk']
+        )
 
 class CollectionViewSet(ModelViewSet):
     queryset = Collection.objects.annotate(
