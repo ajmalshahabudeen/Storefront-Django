@@ -7,6 +7,7 @@
         "cffi",
         "coreapi",
         "coreschema",
+        "corsheaders",
         "custome",
         "defusedxml",
         "djangorestframework",
