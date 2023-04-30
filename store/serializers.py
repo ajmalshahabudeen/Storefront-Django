@@ -16,12 +16,22 @@ class CollectionSerializer(serializers.Serializer):
     #id = serializers.IntegerField()
     title = serializers.CharField(max_length=255)
     products_count = serializers.IntegerField(read_only=True)
+    
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ['id', 'image']
+    
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        return ProductImage.objects.create(product_id=product_id, **validated_data)
 
 class ProductSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(many=True, read_only=True)
     class Meta:
         model = Product
         fields = ['id', 'title', 'description', 'slug', 'inventory',
-                  'unit_price', 'price_with_tax', 'collection'] 
+                  'unit_price', 'price_with_tax', 'collection', 'images'] 
 
     price_with_tax = serializers.SerializerMethodField(
         method_name= 'calculate_tax'
@@ -38,14 +48,6 @@ class ProductSerializer(serializers.ModelSerializer):
     def calculate_tax(self, product:Product):
         return product.unit_price * Decimal(1.1)
     
-class ProductImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductImage
-        fields = ['id', 'image']
-    
-    def create(self, validated_data):
-        product_id = self.context['product_id']
-        return ProductImage.objects.create(product_id=product_id, **validated_data)
     
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:    
