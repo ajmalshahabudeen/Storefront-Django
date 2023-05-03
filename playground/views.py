@@ -5,6 +5,7 @@ from django.shortcuts import render
 # from store.models import Product, OrderItem 
 # from django.core.mail import send_mail, mail_admins, BadHeaderError
 from django.core.mail import EmailMessage, BadHeaderError
+from templated_mail.mail import BaseEmailMessage
 
 # Create your views here.
 #Transform
@@ -15,14 +16,18 @@ def say_hello(request):
     # result = Product.objects.aggregate(Count('id'),Min('unit_price'))
     # return render(request, 'hello.html', {'name': 'ajmal', 'result':result})
     try:
-        message = EmailMessage(
-            'subject',
-            'messages',
-            'from@mail.com',
-            ['to@mail.com']
+        message = BaseEmailMessage(
+            template_name='emails/email.html',
+            context={'name':'superman'}
         )
-        message.attach_file('playground/static/images/Ajmal_bg.jpg')
-        message.send()
+        # message = EmailMessage(
+        #     'subject',
+        #     'messages',
+        #     'from@mail.com',
+        #     ['to@mail.com']
+        # )
+        # message.attach_file('playground/static/images/Ajmal_bg.jpg')
+        message.send(['to@mail.com'])
         # mail_admins(
         #     'subject',
         #     'message',
