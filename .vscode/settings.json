@@ -23,6 +23,7 @@
         "pycodestyle",
         "pycparser",
         "pytz",
+        "rnwood",
         "simplejwt",
         "sqlparse",
         "tzdata",
