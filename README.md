@@ -21,7 +21,7 @@ I am using a WSL(Windows Subsystem for Linux) for running this django project.
 2. Install Extension in VSCode for Remote Connection
 
    - Extension Name: Remote - WSL
-   - Open Command Palette and type: Remote-WSL
+   - Open Command Palette and type: Remote-WSL:Reopen Folder in WSL
    This will re-open the project folder.
    Open a terminal window on VSCode. You'll see the command prompt changed to Linux.
 
