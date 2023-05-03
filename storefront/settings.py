@@ -97,25 +97,25 @@ WSGI_APPLICATION = 'storefront.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'storefront',
-        'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': '45151527aA@#'
-    }
-}
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'storefront',
-#         'HOST': '192.168.1.3',
-#         'USER': 'ajmal',
-#         'PASSWORD': '123123'
+#         'HOST': 'localhost',
+#         'USER': 'root',
+#         'PASSWORD': '45151527aA@#'
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'storefront',
+        'HOST': '192.168.1.7',
+        'USER': 'ajmal',
+        'PASSWORD': '123123'
+    }
+}
 
 
 # Password validation
