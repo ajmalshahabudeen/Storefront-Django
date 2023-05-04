@@ -4,8 +4,9 @@ from django.shortcuts import render
 # from django.db.models.aggregates import Min,Max,Count,Avg 
 # from store.models import Product, OrderItem 
 # from django.core.mail import send_mail, mail_admins, BadHeaderError
-from django.core.mail import EmailMessage, BadHeaderError
-from templated_mail.mail import BaseEmailMessage
+# from django.core.mail import EmailMessage, BadHeaderError
+# from templated_mail.mail import BaseEmailMessage
+from .tasks import notify_customers
 
 # Create your views here.
 #Transform
@@ -13,13 +14,15 @@ from templated_mail.mail import BaseEmailMessage
 #Pull data from db
 
 def say_hello(request):
+    notify_customers.delay('hello everyone')
+    
     # result = Product.objects.aggregate(Count('id'),Min('unit_price'))
     # return render(request, 'hello.html', {'name': 'ajmal', 'result':result})
-    try:
-        message = BaseEmailMessage(
-            template_name='emails/email.html',
-            context={'name':'superman'}
-        )
+    # try:
+        # message = BaseEmailMessage(
+        #     template_name='emails/email.html',
+        #     context={'name':'superman'}
+        # )
         # message = EmailMessage(
         #     'subject',
         #     'messages',
@@ -27,12 +30,12 @@ def say_hello(request):
         #     ['to@mail.com']
         # )
         # message.attach_file('playground/static/images/Ajmal_bg.jpg')
-        message.send(['to@mail.com'])
+        # message.send(['to@mail.com'])
         # mail_admins(
         #     'subject',
         #     'message',
         #     html_message='message'
         # )
-    except BadHeaderError:
-        pass
+    # except BadHeaderError:
+    #     pass
     return render(request, 'hello.html', {'name': 'ajmal'})
