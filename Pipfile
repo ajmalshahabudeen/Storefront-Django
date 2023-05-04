@@ -46,6 +46,7 @@ tzdata = "==2023.3"
 uritemplate = "==4.1.1"
 urllib3 = "==1.26.15"
 celery = "*"
+flower = "*"
 
 [dev-packages]
 autopep8 = "*"
