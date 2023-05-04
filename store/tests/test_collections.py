@@ -10,7 +10,7 @@ class TestCreateCollection:
         
         # Act
         client = APIClient()
-        response = client.post('/store/collectionns/', {'title':'a'})
+        response = client.post('/store/collections/', {'title':'a'})
         
         # Assert
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
