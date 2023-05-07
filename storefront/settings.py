@@ -112,7 +112,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'storefront',
-        'HOST': '192.168.1.7',
+        'HOST': '192.168.1.8',
         'USER': 'ajmal',
         'PASSWORD': '123123'
     }
