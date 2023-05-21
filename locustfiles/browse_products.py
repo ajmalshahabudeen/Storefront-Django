@@ -34,4 +34,4 @@ class WebsiteUser(HttpUser):
     def on_start(self): # its not a task but a life-cycle hook
         response = self.client.post('/store/carts/')
         result = response.json()
-        self.cart_id = result[id]
+        self.cart_id = result['id']

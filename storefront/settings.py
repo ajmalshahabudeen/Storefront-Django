@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 # from celery.schedules import crontab
 
 
@@ -101,20 +104,20 @@ WSGI_APPLICATION = 'storefront.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'storefront',
+#         'NAME': os.environ.get('DATABASE_NAME'),
 #         'HOST': 'localhost',
 #         'USER': 'root',
-#         'PASSWORD': '45151527aA@#'
+#         'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD')
 #     }
 # }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'storefront',
-        'HOST': '192.168.1.8',
-        'USER': 'ajmal',
-        'PASSWORD': '123123'
+        'NAME': os.environ.get('DATABASE_NAME'),
+        'HOST': os.environ.get('HOST_NAME'),
+        'USER': os.environ.get('MYSQL_USER'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD')
     }
 }
 
