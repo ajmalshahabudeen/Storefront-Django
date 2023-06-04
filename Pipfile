@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "==4.2"
+django = "==4.2.1"
 django-debug-toolbar = "==4.0.0"
 mysqlclient = "==2.1.1"
 djangorestframework = "==3.14.0"
