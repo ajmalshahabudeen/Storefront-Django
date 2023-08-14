@@ -75,7 +75,7 @@ social-auth-app-django==5.2.0
 social-auth-core==4.4.2
 sqlparse==0.4.4
 tomli==2.0.1
-tornado==6.3.2
+tornado==6.3.3
 typing_extensions==4.5.0
 tzdata==2023.3
 uritemplate==4.1.1
